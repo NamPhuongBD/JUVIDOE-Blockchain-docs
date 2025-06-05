@@ -1,6 +1,6 @@
 # Server configuration file
 
-Starting the server with various configuration options can be done using a configuration file instead of using just flags. The command used to start the server with a config file: `z-edge server --config <config_file_name>`
+Starting the server with various configuration options can be done using a configuration file instead of using just flags. The command used to start the server with a config file: `JUVIDOE-edge server --config <config_file_name>`
 
 ### Export config file with default configuration
 
@@ -17,7 +17,7 @@ polyon-edge server export --type yaml
 or just
 
 ```
-z-edge server export
+JUVIDOE-edge server export
 ```
 
 the config file named `default-config.yaml` will be created in the same directory that this command has been run from.
@@ -59,7 +59,7 @@ log_to: ""
 To generate the config file in `json` format:
 
 ```
-z-edge server export --type json
+JUVIDOE-edge server export --type json
 ```
 
 the config file named `default-config.json` will be created in the same directory that this command has been run from.
