@@ -11,7 +11,7 @@ The configuration with default settings for the EVMBuilder Edge server can be ex
 To generate the config file in `yaml` format:
 
 ```
-polyon-edge server export --type yaml
+JUVIDOE-edge server export --type yaml
 ```
 
 or just
