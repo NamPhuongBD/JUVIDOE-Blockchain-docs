@@ -1268,7 +1268,7 @@ secrets generate --name node-1
 {% endtab %}
 {% endtabs %}
 
-Specifies the name of the node for on-service record keeping. Default: `z-edge-node`
+Specifies the name of the node for on-service record keeping. Default: `JUVIDOE-edge-node`
 
 ***
 
