@@ -1,3 +1,4 @@
+
 # Set up and use Proof of Stake (PoS)
 
 ### Overview
@@ -10,7 +11,7 @@ Currently, there is no limit to the number of validators that can stake funds on
 
 ### Staking Smart Contract
 
-The repo for the Staking Smart Contract is located [here](https://github.com/ZChain-168168/ZChain-staking-contracts).
+The repo for the Staking Smart Contract is located [here](https://github.com/JVDCHAIN/JVD-Staking-Contracts).
 
 It holds the necessary testing scripts, ABI files and most importantly the Staking Smart Contract itself.
 
@@ -23,7 +24,7 @@ The **only difference** between setting up a PoS and PoA cluster is in the genes
 **When generating the genesis file for a PoS cluster, an additional flag is needed `--pos`**:
 
 ```
-z-edge genesis --pos ...
+JUVIDOE-edge genesis --pos ...
 ```
 
 ### Setting the length of an epoch
@@ -32,7 +33,7 @@ Epochs are covered in detail in the Epoch Blocks section.
 
 To set the size of an epoch for a cluster (in blocks), when generating the genesis file, an additional flag is specified `--epoch-size`:
 
-<pre><code><strong>z-edge genesis --epoch-size 50
+<pre><code><strong>JUVIDOE-edge genesis --epoch-size 50
 </strong></code></pre>
 
 This value specified in the genesis file that the epoch size should be `50` blocks.
@@ -61,7 +62,7 @@ npm install
 
 #### Setting up the provided helper scripts
 
-Scripts for interacting with the deployed Staking Smart Contract are located on the [Staking Smart Contract repo](https://github.com/ZChain-168168/ZChain-staking-contracts).
+Scripts for interacting with the deployed Staking Smart Contract are located on the [Staking Smart Contract repo](https://github.com/JVDCHAIN/JVD-Staking-Contracts).
 
 Create an `.env` file with the following parameters in the Smart Contracts repo location:
 
@@ -86,7 +87,7 @@ The Staking Smart Contract is pre-deployed at address `0x00000000000000000000000
 
 Any kind of interaction with the staking mechanism is done through the Staking Smart Contract at the specified address.
 
-To learn more about the Staking Smart Contract, please visit the [Staking Smart Contract](https://github.com/ZChain-168168/ZChain-staking-contracts) section.
+To learn more about the Staking Smart Contract, please visit the [Staking Smart Contract](https://github.com/JVDCHAIN/JVD-Staking-Contracts) section.
 {% endhint %}
 
 In order to become part of the validator set, an address needs to stake a certain amount of funds above a threshold.
