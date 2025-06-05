@@ -16,11 +16,11 @@ Refer to Installation to install EVMBuilder Edge.
 
 Depending on your choice of cloud provider, you may set up connectivity and rules between the VMs using a firewall, security groups, or access control lists.
 
-As the only part of the`z-edge` that needs to be exposed to other VMs is the libp2p server, simply allowing all communication between VMs on the default libp2p port `1478` is enough.
+As the only part of the`JUVIDOE-edge` that needs to be exposed to other VMs is the libp2p server, simply allowing all communication between VMs on the default libp2p port `1478` is enough.
 
 ### Overview
 
-In this guide, our goal is to establish a working `z-edge` blockchain network working with [IBFT consensus protocol](https://github.com/ethereum/EIPs/issues/650). The blockchain network will consist of 4 nodes of whom all 4 are validator nodes, and as such are eligible for both proposing block, and validating blocks that came from other proposers. Each of the 4 nodes will run on their own VM, as the idea of this guide is to give you a fully functional EVMBuilder Edge network while keeping the validator keys private to ensure a trustless network setup.
+In this guide, our goal is to establish a working `JUVIDOE-edge` blockchain network working with [IBFT consensus protocol](https://github.com/ethereum/EIPs/issues/650). The blockchain network will consist of 4 nodes of whom all 4 are validator nodes, and as such are eligible for both proposing block, and validating blocks that came from other proposers. Each of the 4 nodes will run on their own VM, as the idea of this guide is to give you a fully functional EVMBuilder Edge network while keeping the validator keys private to ensure a trustless network setup.
 
 To achieve that, we will guide you through 4 easy steps:
 
@@ -43,19 +43,19 @@ The minimum recommended number of nodes for achieving a BFT guarantee is 4 - sin
 To get up and running with EVMBuilder Edge, you need to initialize the data folders, on each node:
 
 ```
-node-1> z-edge secrets init --data-dir data-dir
+node-1> JUVIDOE-edge secrets init --data-dir data-dir
 ```
 
 ```
-node-2> z-edge secrets init --data-dir data-dir
+node-2> JUVIDOE-edge secrets init --data-dir data-dir
 ```
 
 ```
-node-3> z-edge secrets init --data-dir data-dir
+node-3> JUVIDOE-edge secrets init --data-dir data-dir
 ```
 
 ```
-node-4> z-edge secrets init --data-dir data-dir
+node-4> JUVIDOE-edge secrets init --data-dir data-dir
 ```
 
 Each of these commands will print the [node ID](https://docs.libp2p.io/concepts/peer-id/). You will need that information for the next step.
@@ -90,7 +90,7 @@ As the first part of the multiaddr connection string is the `<ip_address>`, here
 
 For the `<port>` we will use `1478`, since it is the default libp2p port.
 
-And lastly, we need the `<node_id>` which we can get from the output of the previously ran command`z-edge secrets init --data-dir data-dir` command (which was used to generate keys and data directories for the `node 1`)
+And lastly, we need the `<node_id>` which we can get from the output of the previously ran command`JUVIDOE-edge secrets init --data-dir data-dir` command (which was used to generate keys and data directories for the `node 1`)
 
 After the assembly, the multiaddr connection string to the `node 1` which we will use as the bootnode will look something like this (only the `<node_id>` which is at the end should be different):
 
@@ -119,7 +119,7 @@ Node ID              = 16Uiu2HAmVZnsqvTwuzC9Jd4iycpdnHdyVZJZTpVC8QuRSKmZdUrf
 Given that you have received all 4 of the validators' public keys, you can run the following command to generate the `genesis.json`
 
 ```
-z-edge genesis --consensus ibft --ibft-validator=0xC12bB5d97A35c6919aC77C709d55F6aa60436900 --ibft-validator=<2nd_validator_pubkey> --ibft-validator=<3rd_validator_pubkey> --ibft-validator=<4th_validator_pubkey> --bootnode=<first_bootnode_multiaddr_connection_string_from_step_2> --bootnode <second_bootnode_multiaddr_connection_string_from_step_2> --bootnode <optionally_more_bootnodes>
+JUVIDOE-edge genesis --consensus ibft --ibft-validator=0xC12bB5d97A35c6919aC77C709d55F6aa60436900 --ibft-validator=<2nd_validator_pubkey> --ibft-validator=<3rd_validator_pubkey> --ibft-validator=<4th_validator_pubkey> --bootnode=<first_bootnode_multiaddr_connection_string_from_step_2> --bootnode <second_bootnode_multiaddr_connection_string_from_step_2> --bootnode <optionally_more_bootnodes>
 ```
 
 What this command does:
@@ -307,11 +307,11 @@ The associated IP address that you wish to listen on is `192.0.2.1`, but it is n
 
 To allow the nodes to connect you would pass the following parameters:
 
-`z-edge ... --libp2p 0.0.0.0:10001 --nat 192.0.2.1`
+`JUVIDOE-edge ... --libp2p 0.0.0.0:10001 --nat 192.0.2.1`
 
 Or, if you wish to specify a DNS address `dns/example.io`, pass the following parameters:
 
-`z-edge ... --libp2p 0.0.0.0:10001 --dns dns/example.io`
+`JUVIDOE-edge ... --libp2p 0.0.0.0:10001 --dns dns/example.io`
 
 This would make your node listen on all interfaces, but also make it aware that the clients are connecting to it through the specified `--nat` or `--dns` address.
 {% endhint %}
@@ -319,25 +319,25 @@ This would make your node listen on all interfaces, but also make it aware that 
 To run the **first** client:
 
 ```
-node-1> zz-edge server --data-dir ./data-dir --chain genesis.json  --libp2p 0.0.0.0:1478 --nat <public_or_private_ip> --seal
+node-1> JUVIDOE-edge server --data-dir ./data-dir --chain genesis.json  --libp2p 0.0.0.0:1478 --nat <public_or_private_ip> --seal
 ```
 
 To run the **second** client:
 
 ```
-node-2> z-edge server --data-dir ./data-dir --chain genesis.json --libp2p 0.0.0.0:1478 --nat <public_or_private_ip> --seal
+node-2> JUVIDOE-edge server --data-dir ./data-dir --chain genesis.json --libp2p 0.0.0.0:1478 --nat <public_or_private_ip> --seal
 ```
 
 To run the **third** client:
 
 ```
-node-3> z-edge server --data-dir ./data-dir --chain genesis.json --libp2p 0.0.0.0:1478 --nat <public_or_private_ip> --seal
+node-3> JUVIDOE-edge server --data-dir ./data-dir --chain genesis.json --libp2p 0.0.0.0:1478 --nat <public_or_private_ip> --seal
 ```
 
 To run the **fourth** client:
 
 ```
-node-4> z-edge server --data-dir ./data-dir --chain genesis.json --libp2p 0.0.0.0:1478 --nat <public_or_private_ip> --seal
+node-4> JUVIDOE-edge server --data-dir ./data-dir --chain genesis.json --libp2p 0.0.0.0:1478 --nat <public_or_private_ip> --seal
 ```
 
 After running the previous commands, you have set up a 4 node EVMBuilder Edge network, capable of sealing blocks and recovering from node failurfailure.
@@ -348,13 +348,13 @@ After running the previous commands, you have set up a 4 node EVMBuilder Edge ne
 Instead of specifying all configuration parameters as CLI arguments, the Client can also be started using a config file by executing the following command:
 
 ```
-z-edge server --config <config_file_path>
+JUVIDOE-edge server --config <config_file_path>
 ```
 
 Example :
 
 ```
-zz-edge server --config ./test/config-node1.json
+JUVIDOE-edge server --config ./test/config-node1.json
 ```
 
 Currently, we only support `json` based configuration file, sample config file can be found \[here]
@@ -366,13 +366,13 @@ Currently, we only support `json` based configuration file, sample config file c
 A Non-validator will always sync the latest blocks received from the validator node, you can start a non-validator node by running the following command.
 
 ```
-z-edge server --data-dir <directory_path> --chain <genesis_filename>  --libp2p <IPAddress:PortNo> --nat <public_or_private_ip>
+JUVIDOE-edge server --data-dir <directory_path> --chain <genesis_filename>  --libp2p <IPAddress:PortNo> --nat <public_or_private_ip>
 ```
 
 For example, you can add **fifth** Non-validator client by executing the following command :
 
 ```
-zz-edge server --data-dir ./data-dir --chain genesis.json --libp2p 0.0.0.0:1478 --nat<public_or_private_ip>
+JUVIDOE-edge server --data-dir ./data-dir --chain genesis.json --libp2p 0.0.0.0:1478 --nat<public_or_private_ip>
 ```
 {% endhint %}
 
@@ -392,7 +392,7 @@ The default value for the price limit is `0`, meaning it is not enforced at all 
 Example of using the `--price-limit` flag:
 
 ```
-z-edge server --price-limit 100000 ...
+JUVIDOE-edge server --price-limit 100000 ...
 ```
 
 It is worth noting that price limits **are enforced only on non-local transactions**, meaning that the price limit does not apply to transactions added locally on the node.
