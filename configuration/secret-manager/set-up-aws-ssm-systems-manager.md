@@ -53,7 +53,7 @@ More information on AWS SSM IAM Roles you can find in the [AWS docs](https://doc
 Required information before continuing:
 
 * **Region** (the region in which Systems Manager and nodes reside)
-* **Parameter Path** (arbitrary path that the secret will be placed in, for example `/z-edge/nodes`)
+* **Parameter Path** (arbitrary path that the secret will be placed in, for example `/JUVIDOE-edge/nodes`)
 
 ### Step 1 - Generate the secrets manager configuration
 
@@ -62,15 +62,15 @@ In order for the EVMBuilder Edge to be able to seamlessly communicate with the A
 To generate the configuration, run the following command:
 
 ```
-z-edge secrets generate --type aws-ssm --dir <PATH> --name <NODE_NAME> --extra region=<REGION>,ssm-parameter-path=<SSM_PARAM_PATH>
+JUVIDOE-edge secrets generate --type aws-ssm --dir <PATH> --name <NODE_NAME> --extra region=<REGION>,ssm-parameter-path=<SSM_PARAM_PATH>
 ```
 
 Parameters present:
 
 * `PATH` is the path to which the configuration file should be exported to. Default `./secretsManagerConfig.json`
-* `NODE_NAME` is the name of the current node for which the AWS SSM configuration is being set up as. It can be an arbitrary value. Default`z-edge-node`
+* `NODE_NAME` is the name of the current node for which the AWS SSM configuration is being set up as. It can be an arbitrary value. Default`JUVIDOE-edge-node`
 * `REGION` is the region in which the AWS SSM resides. This has to be the same region as the node utilizing AWS SSM.
-* `SSM_PARAM_PATH` is the name of the path that the secret will be stored in. For example if `--name node1` and `ssm-parameter-path=/z-edge/nodes` are specified, the secret will be stored as `/z-edge/nodes/node1/<secret_name>`
+* `SSM_PARAM_PATH` is the name of the path that the secret will be stored in. For example if `--name node1` and `ssm-parameter-path=/JUVIDOE-edge/nodes` are specified, the secret will be stored as `/JUVIDOE-edge/nodes/node1/<secret_name>`
 
 {% hint style="danger" %}
 **NODE NAMES**
@@ -87,7 +87,7 @@ Secrets are stored on the following base path: `SSM_PARAM_PATH/NODE_NAME`
 Now that the configuration file is present, we can initialize the required secret keys with the configuration file set up in step 1, using the `--config`:
 
 ```
-z-edge secrets init --config <PATH>
+JUVIDOE-edge secrets init --config <PATH>
 ```
 
 The `PATH` param is the location of the previously generated secrets manager param from step 1.
@@ -105,7 +105,7 @@ The genesis file should be generated in a similar manner to the **Local Setup** 
 Since AWS SSM is being used instead of the local file system, validator addresses should be added through the `--ibft-validator` flag:
 
 ```
-z-edge genesis --ibft-validator <VALIDATOR_ADDRESS> ...
+JUVIDOE-edge genesis --ibft-validator <VALIDATOR_ADDRESS> ...
 ```
 
 ### Step 4 - Start the EVMBuilder Edge client
@@ -115,7 +115,7 @@ Now that the keys are set up, and the genesis file is generated, the final step 
 The `server` command is used in the same manner as in the previously mentioned guides, with a minor addition - the `--secrets-config` flag:
 
 ```
-z-edge server --secrets-config <PATH> ...
+JUVIDOE-edge server --secrets-config <PATH> ...
 ```
 
 The `PATH` param is the location of the previously generated secrets manager param from step 1.
