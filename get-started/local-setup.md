@@ -12,13 +12,13 @@ The procedure differs greatly from the way you would want to set up Z Edge netwo
 
 ### Requirements[​](https://polygon-edge-v063.evmbuilder.com/docs/get-started/set-up-ibft-locally#requirements) <a href="#requirements" id="requirements"></a>
 
-Refer to [Installation](https://polygon-edge-v063.evmbuilder.com/docs/get-started/installation) to install Z Edge.
+Refer to [Installation](https://polygon-edge-v063.evmbuilder.com/docs/get-started/installation) to install JUVIDOE Edge.
 
 ### Overview[​](https://polygon-edge-v063.evmbuilder.com/docs/get-started/set-up-ibft-locally#overview) <a href="#overview" id="overview"></a>
 
 ![Local Setup](https://polygon-edge-v063.evmbuilder.com/assets/images/local-ee63da94702b8a5a77350848f8b64221.svg)
 
-In this guide, our goal is to establish a working `z-edge` blockchain network working with [IBFT consensus protocol](https://github.com/ethereum/EIPs/issues/650). The blockchain network will consist of 4 nodes of whom all 4 are validator nodes, and as such are eligible for both proposing block, and validating blocks that came from other proposers. All 4 nodes will run on the same machine, as the idea of this guide is to give you a fully functional IBFT cluster in the least amount of time.
+In this guide, our goal is to establish a working `JUVIDOE-edge` blockchain network working with [IBFT consensus protocol](https://github.com/ethereum/EIPs/issues/650). The blockchain network will consist of 4 nodes of whom all 4 are validator nodes, and as such are eligible for both proposing block, and validating blocks that came from other proposers. All 4 nodes will run on the same machine, as the idea of this guide is to give you a fully functional IBFT cluster in the least amount of time.
 
 To achieve that, we will guide you through 4 easy steps:
 
@@ -42,19 +42,19 @@ The minimum recommended number of nodes for achieving a BFT guarantee is 4 - sin
 In order to get up and running with IBFT, you need to initialize the data folders, one for each node:
 
 ```
-z-edge secrets init --data-dir test-chain-1
+JUVIDOE-edge secrets init --data-dir test-chain-1
 ```
 
 ```
-z-edge secrets init --data-dir test-chain-2
+JUVIDOE-edge secrets init --data-dir test-chain-2
 ```
 
 ```
-z-edge secrets init --data-dir test-chain-3
+JUVIDOE-edge secrets init --data-dir test-chain-3
 ```
 
 ```
-z-edge secrets init --data-dir test-chain-4
+JUVIDOE-edge secrets init --data-dir test-chain-4
 ```
 
 Each of these commands will print the validator key and the [node ID](https://docs.libp2p.io/concepts/peer-id/). You will need the Node ID of the first node for the next step.
@@ -63,7 +63,7 @@ Each of these commands will print the validator key and the [node ID](https://do
 
 For a node to successfully establish connectivity, it must know which `bootnode` server to connect to in order to gain information about all the remaining nodes on the network. The `bootnode` is sometimes also known as the `rendezvous` server in p2p jargon.
 
-`bootnode` is not a special instance of the z-edge node. Every z-edge node can serve as a `bootnode`, but every z-edge node needs to have a set of bootnodes specified which will be contacted to provide information on how to connect with all remaining nodes in the network.
+`bootnode` is not a special instance of the JUVIDOE-edge node. Every JUVIDOE-edge node can serve as a `bootnode`, but every JUVIDOE-edge node needs to have a set of bootnodes specified which will be contacted to provide information on how to connect with all remaining nodes in the network.
 
 To create the connection string for specifying the bootnode, we will need to conform to the [multiaddr format](https://docs.libp2p.io/concepts/addressing/):
 
@@ -83,7 +83,7 @@ Since we are running on localhost, it is safe to assume that the `<ip_address>` 
 
 For the `<port>` we will use `10001` since we will configure the libp2p server for `node 1` to listen on this port later.
 
-And lastly, we need the `<node_id>` which we can get from the output of the previously ran command `z-edge secrets init --data-dir test-chain-1` command (which was used to generate keys and data directories for the `node1`)
+And lastly, we need the `<node_id>` which we can get from the output of the previously ran command `JUVIDOE-edge secrets init --data-dir test-chain-1` command (which was used to generate keys and data directories for the `node1`)
 
 After the assembly, the multiaddr connection string to the `node 1` which we will use as the bootnode will look something like this (only the `<node_id>` which is at the end should be different):
 
@@ -100,7 +100,7 @@ Similarly, we construct the multiaddr for second bootnode as shown below
 ### Step 3: Generate the genesis file with the 4 nodes as validators[​](https://polygon-edge-v063.evmbuilder.com/docs/get-started/set-up-ibft-locally#step-3-generate-the-genesis-file-with-the-4-nodes-as-validators) <a href="#step-3-generate-the-genesis-file-with-the-4-nodes-as-validators" id="step-3-generate-the-genesis-file-with-the-4-nodes-as-validators"></a>
 
 ```
-z-edge genesis --consensus ibft --ibft-validators-prefix-path test-chain- --bootnode /ip4/127.0.0.1/tcp/10001/p2p/16Uiu2HAmJxxH1tScDX2rLGSU9exnuvZKNM9SoK3v315azp68DLPW --bootnode /ip4/127.0.0.1/tcp/20001/p2p/16Uiu2HAmS9Nq4QAaEiogE4ieJFUYsoH28magT7wSvJPpfUGBj3Hq 
+JUVIDOE-edge genesis --consensus ibft --ibft-validators-prefix-path test-chain- --bootnode /ip4/127.0.0.1/tcp/10001/p2p/16Uiu2HAmJxxH1tScDX2rLGSU9exnuvZKNM9SoK3v315azp68DLPW --bootnode /ip4/127.0.0.1/tcp/20001/p2p/16Uiu2HAmS9Nq4QAaEiogE4ieJFUYsoH28magT7wSvJPpfUGBj3Hq 
 ```
 
 What this command does:
@@ -269,7 +269,7 @@ file locks                      (-x) unlimited
 
 ### Step 4: Run all the clients[​](https://polygon-edge-v063.evmbuilder.com/docs/get-started/set-up-ibft-locally#step-4-run-all-the-clients) <a href="#step-4-run-all-the-clients" id="step-4-run-all-the-clients"></a>
 
-Because we are attempting to run a Z Edge network consisting of 4 nodes all on the same machine, we need to take care to avoid port conflicts. This is why we will use the following reasoning for determining the listening ports of each server of a node:
+Because we are attempting to run a JUVIDOE Edge network consisting of 4 nodes all on the same machine, we need to take care to avoid port conflicts. This is why we will use the following reasoning for determining the listening ports of each server of a node:
 
 * `10000` for the gRPC server of `node 1`, `20000` for the GRPC server of `node 2`, etc.
 * `10001` for the libp2p server of `node 1`, `20001` for the libp2p server of `node 2`, etc.
@@ -278,25 +278,25 @@ Because we are attempting to run a Z Edge network consisting of 4 nodes all on t
 To run the **first** client (note the port `10001` since it was used as a part of the libp2p multiaddr in **step 2** alongside node 1's Node ID):
 
 ```
-z-edge server --data-dir ./test-chain-1 --chain genesis.json --grpc-address :10000 --libp2p :10001 --jsonrpc :10002 --seal
+JUVIDOE-edge server --data-dir ./test-chain-1 --chain genesis.json --grpc-address :10000 --libp2p :10001 --jsonrpc :10002 --seal
 ```
 
 To run the **second** client:
 
 ```
-z-edge server --data-dir ./test-chain-2 --chain genesis.json --grpc-address :20000 --libp2p :20001 --jsonrpc :20002 --seal
+JUVIDOE-edge server --data-dir ./test-chain-2 --chain genesis.json --grpc-address :20000 --libp2p :20001 --jsonrpc :20002 --seal
 ```
 
 To run the **third** client:
 
 ```
-z-edge server --data-dir ./test-chain-3 --chain genesis.json --grpc-address :30000 --libp2p :30001 --jsonrpc :30002 --seal
+JUVIDOE-edge server --data-dir ./test-chain-3 --chain genesis.json --grpc-address :30000 --libp2p :30001 --jsonrpc :30002 --seal
 ```
 
 To run the **fourth** client:
 
 ```
-z-edge server --data-dir ./test-chain-4 --chain genesis.json --grpc-address :40000 --libp2p :40001 --jsonrpc :40002 --seal
+JUVIDOE-edge server --data-dir ./test-chain-4 --chain genesis.json --grpc-address :40000 --libp2p :40001 --jsonrpc :40002 --seal
 ```
 
 To briefly go over what has been done so far:
@@ -310,7 +310,7 @@ To briefly go over what has been done so far:
 
 The structure of the genesis file is covered in the [CLI Commands](https://polygon-edge-v063.evmbuilder.com/docs/get-started/cli-commands) section.
 
-After running the previous commands, you have set up a 4 node Z Edge network, capable of sealing blocks and recovering from node failure.
+After running the previous commands, you have set up a 4 node JUVIDOE Edge network, capable of sealing blocks and recovering from node failure.
 
 {% hint style="warning" %}
 **START THE CLIENT USING CONFIG FILE**
@@ -318,13 +318,13 @@ After running the previous commands, you have set up a 4 node Z Edge network, ca
 Instead of specifying all configuration parameters as CLI arguments, the Client can also be started using a config file by executing the following command:
 
 ```
-z-edge server --config <config_file_path>
+JUVIDOE-edge server --config <config_file_path>
 ```
 
 Example:
 
 ```
-z-edge server --config ./test/config-node1.json
+JUVIDOE-edge server --config ./test/config-node1.json
 ```
 
 Currently, we only support `json` based configuration file, sample config file can be found [here](https://polygon-edge-v063.evmbuilder.com/docs/configuration/sample-config)
@@ -336,13 +336,13 @@ Currently, we only support `json` based configuration file, sample config file c
 A Non-validator will always sync the latest blocks received from the validator node, you can start a non-validator node by running the following command.
 
 ```
-z-edge server --data-dir <directory_path> --chain <genesis_filename> --grpc-address <portNo> --libp2p <portNo> --jsonrpc <portNo>
+JUVIDOE-edge server --data-dir <directory_path> --chain <genesis_filename> --grpc-address <portNo> --libp2p <portNo> --jsonrpc <portNo>
 ```
 
 For example, you can add **fifth** Non-validator client by executing the following command :
 
 ```
-z-edge server --data-dir ./test-chain --chain genesis.json --grpc-address :50000 --libp2p :50001 --jsonrpc :50002 
+JUVIDOE-edge server --data-dir ./test-chain --chain genesis.json --grpc-address :50000 --libp2p :50001 --jsonrpc :50002 
 
 ```
 {% endhint %}
@@ -350,7 +350,7 @@ z-edge server --data-dir ./test-chain --chain genesis.json --grpc-address :50000
 {% hint style="warning" %}
 **SPECIFY THE PRICE LIMIT**
 
-A Z Edge node can be started with a set **price limit** for incoming transactions.
+A JUVIDOE Edge node can be started with a set **price limit** for incoming transactions.
 
 The unit for the price limit is `wei`.
 
@@ -363,13 +363,13 @@ The default value for the price limit is `0`, meaning it is not enforced at all 
 Example of using the `--price-limit` flag:
 
 ```
-z-edge server --price-limit 100000 ...
+JUVIDOE-edge server --price-limit 100000 ...
 ```
 
 It is worth noting that price limits **are enforced only on non-local transactions**, meaning that the price limit does not apply to transactions added locally on the node.
 {% endhint %}
 
-### Step 5: Interact with the z-edge network[​](https://polygon-edge-v063.evmbuilder.com/docs/get-started/set-up-ibft-locally#step-5-interact-with-the-polygon-edge-network) <a href="#step-5-interact-with-the-polygon-edge-network" id="step-5-interact-with-the-polygon-edge-network"></a>
+### Step 5: Interact with the JUVIDOE-edge network[​](https://polygon-edge-v063.evmbuilder.com/docs/get-started/set-up-ibft-locally#step-5-interact-with-the-polygon-edge-network) <a href="#step-5-interact-with-the-polygon-edge-network" id="step-5-interact-with-the-polygon-edge-network"></a>
 
 Now that you've set up at least 1 running client, you can go ahead and interact with the blockchain using the account you premined above and by specifying the JSON-RPC URL to any of the 4 nodes:
 
