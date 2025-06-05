@@ -41,7 +41,7 @@ In order for the EVMBuilder Edge to be able to seamlessly communicate with the V
 To generate the configuration, run the following command:
 
 ```
-z-edge secrets generate --dir <PATH> --token <TOKEN> --server-url <SERVER_URL> --name <NODE_NAME>
+JUVIDOE-edge secrets generate --dir <PATH> --token <TOKEN> --server-url <SERVER_URL> --name <NODE_NAME>
 ```
 
 Parameters present:
@@ -49,7 +49,7 @@ Parameters present:
 * `PATH` is the path to which the configuration file should be exported to. Default `./secretsManagerConfig.json`
 * `TOKEN` is the access token previously mentioned in the prerequisites section
 * `SERVER_URL` is the URL of the API for the Vault server, also mentioned in the prerequisites section
-* `NODE_NAME` is the name of the current node for which the Vault configuration is being set up as. It can be an arbitrary value. Default `z-edge-node`
+* `NODE_NAME` is the name of the current node for which the Vault configuration is being set up as. It can be an arbitrary value. Default `JUVIDOE-edge-node`
 
 {% hint style="warning" %}
 **NODE NAMES**
@@ -66,7 +66,7 @@ Secrets are stored on the following base path: `secrets/node_name`
 Now that the configuration file is present, we can initialize the required secret keys with the configuration file set up in step 1, using the `--config`:
 
 ```
-z-edge secrets init --config <PATH>
+JUVIDOE-edge secrets init --config <PATH>
 ```
 
 The `PATH` param is the location of the previously generated secrets manager param from step 1.
@@ -78,7 +78,7 @@ The genesis file should be generated in a similar manner to the **Local Setup** 
 Since Hashicorp Vault is being used instead of the local file system, validator addresses should be added through the `--ibft-validator` flag:
 
 ```
-z-edge genesis --ibft-validator <VALIDATOR_ADDRESS> ...
+JUVIDOE-edge genesis --ibft-validator <VALIDATOR_ADDRESS> ...
 ```
 
 ### Step 4 - Start the EVMBuilder Edge client
@@ -88,7 +88,7 @@ Now that the keys are set up, and the genesis file is generated, the final step 
 The `server` command is used in the same manner as in the previously mentioned guides, with a minor addition - the `--secrets-config` flag:
 
 ```
-z-edge server --secrets-config <PATH> ...
+JUVIDOE-edge server --secrets-config <PATH> ...
 ```
 
 The `PATH` param is the location of the previously generated secrets manager param from step 1.
