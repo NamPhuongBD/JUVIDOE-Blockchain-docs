@@ -50,7 +50,7 @@ In order for the EVMBuilder Edge to be able to seamlessly communicate with the G
 To generate the configuration, run the following command:
 
 ```
-z-edge secrets generate --type gcp-ssm --dir <PATH> --name <NODE_NAME> --extra project-id=<PROJECT_ID>,gcp-ssm-cred=<GCP_CREDS_FILE>
+JUVIDOE-edge secrets generate --type gcp-ssm --dir <PATH> --name <NODE_NAME> --extra project-id=<PROJECT_ID>,gcp-ssm-cred=<GCP_CREDS_FILE>
 ```
 
 Parameters present:
@@ -75,7 +75,7 @@ Secrets are stored on the following base path: `projects/PROJECT_ID/NODE_NAME`
 Now that the configuration file is present, we can initialize the required secret keys with the configuration file set up in step 1, using the `--config`:
 
 ```
-z-edge secrets init --config <PATH>
+JUVIDOE-edge secrets init --config <PATH>
 ```
 
 The `PATH` param is the location of the previously generated secrets manager param from step 1.
@@ -87,7 +87,7 @@ The genesis file should be generated in a similar manner to the **Local Setup** 
 Since GCP SM is being used instead of the local file system, validator addresses should be added through the `--ibft-validator` flag:
 
 ```
-z-edge genesis --ibft-validator <VALIDATOR_ADDRESS> ...
+JUVIDOE-edge genesis --ibft-validator <VALIDATOR_ADDRESS> ...
 ```
 
 ### Step 4 - Start the EVMBuilder Edge client
@@ -97,7 +97,7 @@ Now that the keys are set up, and the genesis file is generated, the final step 
 The `server` command is used in the same manner as in the previously mentioned guides, with a minor addition - the `--secrets-config` flag:
 
 ```
-z-edge server --secrets-config <PATH> ...
+JUVIDOE-edge server --secrets-config <PATH> ...
 ```
 
 The `PATH` param is the location of the previously generated secrets manager param from step 1.
